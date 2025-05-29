@@ -8,22 +8,6 @@ const JobList = ({ onApply }) => {
 
   const API_URL = "http://localhost:5000/api";
 
-  // useEffect(() => {
-  //   const fetchJobs = async () => {
-  //     try {
-  //       const res = await axios.get(`${API_URL}/job-requirements`);
-  //       console.log("res",res);
-        
-  //       setJobs(res.data);
-  //       console.log("jobs",jobs);
-
-  //     } catch (error) {
-  //       console.error('Error fetching jobs:', error);
-  //     }
-  //   };
-  //   fetchJobs();
-  // }, []);
-
   useEffect(() => {
   const fetchJobs = async () => {
     try {
@@ -47,30 +31,38 @@ useEffect(() => {
   };
 
   return (
-<div className="container mt-5">
-  <h4 className="mb-4 text-center fw-bold">Available Job Openings</h4>
-  <div className="row g-4">
+<div className="container py-5">
+  <h2 className="text-center fw-bold mb-5 text-dark display-6">Explore Career Opportunities</h2>
+
+  <div className="row row-cols-1 row-cols-md-2 g-4">
     {jobs.map((job) => (
-      <div className="col-md-6" key={job._id}>
-        <div className="card h-100 shadow-sm border-0 rounded-3">
-          <div className="card-body d-flex flex-column">
-            <h5 className="card-title fw-semibold text-primary">{job.title}</h5>
-            <p className="card-text text-secondary flex-grow-1">{job.description}</p>
-            <ul className="list-group list-group-flush mb-3 border-0">
-              <li className="list-group-item px-0 py-1">
-                <strong>Department:</strong> {job.department}
+      <div className="col" key={job.id}>
+        <div className="card h-100 border-0 shadow-sm rounded-4">
+          <div className="card-body d-flex flex-column p-4">
+            <h5 className="fw-semibold text-dark mb-2">{job.title}</h5>
+            <p className="text-muted small flex-grow-1">{job.description}</p>
+
+            <ul className="list-unstyled mb-4 small">
+              <li className="mb-1">
+                <strong className="text-secondary">Department:</strong> {job.department}
               </li>
-              <li className="list-group-item px-0 py-1">
-                <strong>Experience:</strong> {job.required_experience}
+              <li className="mb-1">
+                <strong className="text-secondary">Experience:</strong> {job.required_experience}
               </li>
-              <li className="list-group-item px-0 py-1">
-                <strong>Qualification:</strong> {job.qualification}
+              <li className="mb-1">
+                <strong className="text-secondary">Qualification:</strong> {job.qualification}
               </li>
-              <li className="list-group-item px-0 py-1">
-                <strong>Work Type:</strong> {job.work_type}
+              <li>
+                <strong className="text-secondary">Work Type:</strong> {job.work_type}
               </li>
             </ul>
-             <button className="btn btn-primary w-100 mt-auto" onClick={() => handleApply(job._id)}> Apply for this Post </button>
+
+            <button
+              className="btn btn-outline-primary fw-semibold mt-auto"
+              onClick={() => handleApply(job.id)}
+            >
+              Apply Now
+            </button>
           </div>
         </div>
       </div>
