@@ -9,6 +9,7 @@ import JobList from './pages/job_list';
 import JobApplicationForm from './pages/job_application';
 import JobRequirementForm from './pages/job_requirement';
 import Notification from './pages/notification';
+import JobRequests from './pages/job_Request';
 
 function AppRoutes() {
 return (
@@ -22,6 +23,7 @@ return (
                 <Route path="/jobs" element={<JobList />} />
                 <Route path="/apply/:jobId" element={<JobApplicationForm />} />
                 <Route path="/notifications" element={<Notification />} />
+                <Route path="/jobrequests" element={<JobRequests />} />
                 <Route path="*" element={<h1>Page Not Found</h1>} />
             </Routes>
         <ToastContainer />

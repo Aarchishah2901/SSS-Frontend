@@ -114,7 +114,7 @@ const Navbar = () => {
   if (location.pathname === "/") return null;
 
   const userCookie = Cookies.get("user");
-  const user = userCookie ? JSON.parse(userCookie) : null;
+  const user = userCookie ? (userCookie) : null;
 
   const handleLogout = () => {
     Cookies.remove("user");

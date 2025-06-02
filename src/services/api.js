@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
+//Register
 export const registerUser = async (data) => {
   const res = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
@@ -14,6 +15,7 @@ export const registerUser = async (data) => {
   return res.json();
 };
 
+//Login
 export const loginUser = async (data) => {
   const res = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
@@ -26,6 +28,8 @@ export const loginUser = async (data) => {
   return res.json();
 };
 
+
+//Job Requirement
 export const postJobRequirement = async (data) => {
   const res = await fetch(`${API_URL}/job-requirements`, {
     method: "POST",
@@ -60,7 +64,17 @@ export const submitJobApplication = async (data) => {
   return res.json();
 };
 
+//Selection
 export const getUserSelections = async (jobApplicantId) => {
   const response = await axios.get(`http://localhost:5000/api/selections?job_applicant_id=${jobApplicantId}`);
   return response.data;
+};
+
+//Job Request
+export const getAllJobRequests = async () => {
+  return await axios.get(`${API_URL}/job-requests`);
+};
+
+export const updateJobStatus = async (id, status) => {
+  return await axios.put(`${API_URL}/${id}/status`, { status });
 };

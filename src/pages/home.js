@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/home.css';
@@ -7,6 +7,15 @@ const Home = () => {
   // const handleImgError = (e) => {
   //   e.target.src = "https://via.placeholder.com/1200x500?text=Image+Not+Found";
   // };
+  const [jobs, setJobs] = useState([]);
+  const API_URL = "http://localhost:5000/api";
+
+  useEffect(() => {
+    fetch(`${API_URL}/job-requirements`)
+      .then((res) => res.json())
+      .then((data) => setJobs(data))
+      .catch((err) => console.error("Error fetching jobs:", err));
+  }, []);
 
   return (
     <div className="home-page">
@@ -119,21 +128,24 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Latest Jobs */}
       <section className="jobs-section py-5">
         <div className="container">
           <h3 className="text-center fw-bold mb-4">Latest Job Openings</h3>
           <div className="row g-4">
-            {[1, 2, 3].map((job, idx) => (
-              <div className="col-md-4" key={idx}>
-                <div className="card h-100 p-3">
-                  <h5>Frontend Developer</h5>
-                  <p className="text-muted">ABC Tech Pvt Ltd • Bangalore</p>
-                  <p>Looking for a skilled React developer with 2+ years of experience.</p>
-                  <Link to="/login" className="btn btn-primary mt-auto">Apply Now</Link>
-                </div>
-              </div>
-            ))}
+              {jobs.length === 0 ? (
+              <p className="text-center">No job postings available right now.</p>
+            ) : (
+              jobs.slice(0, 5).map((job, idx) => (
+          <div className="col-md-4" key={job.id || idx}>
+            <div className="card h-100 p-3 shadow-sm">
+              <h5 className="fw-bold">{job.title}</h5>
+              <p className="text-muted mb-1">{job.company} • {job.location}</p>
+              <p className="mb-2"><strong>Description:</strong> {job.description?.slice(0, 100)}...</p>
+              <Link to="/login" className="btn btn-primary mt-auto">Apply Now</Link>
+            </div>
+          </div>
+            ))
+          )}
           </div>
         </div>
       </section>

@@ -6,7 +6,7 @@ const Notification = () => {
   const [selections, setSelections] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const user = Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
+  const user = Cookies.get("user") ? (Cookies.get("user")) : null;
   const applicantName = user?.name || user?.applicant_name || "";
 
   useEffect(() => {
