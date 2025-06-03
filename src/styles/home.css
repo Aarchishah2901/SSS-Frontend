@@ -1,9 +1,23 @@
 .hero-section {
   background: linear-gradient(to right, #ffffff, #ffffff, #ffffff); 
   color: #fff;
-  padding: 40px 0;
+  padding: 0px 0;
   text-align: center;
   position: relative;
+}
+
+/* Navbar */
+.navbar {
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  font-size: 0.99rem;
+}
+
+.nav-link {
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  margin-left: 0.5rem;
+  margin-right: 0.57rem;
 }
 
 /* Carousel Image */
@@ -17,7 +31,7 @@
 .carousel-caption {
   background: rgba(0, 0, 0, 0.5);
   padding: 30px;
-  border-radius: 10px;
+  border-radius: 0px;
   top: 0;
   bottom: 0;
   display: flex;
@@ -128,9 +142,7 @@
 
 /* ---------------------- Footer ---------------------*/
 .footer-section {
-  background: linear-gradient(to right, #1e3c72, #2a5298);
-  color: white;
-}
+  background: linear-gradient(to right,   #000000 0%,#010408 40%, #FFC107 70%, #FFFFFF 100% ); color: white; }
 
 .footer-section h4,
 .footer-section h5 {

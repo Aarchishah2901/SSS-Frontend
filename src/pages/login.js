@@ -16,75 +16,60 @@ const Login = () => {
     }));
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   try {
-  //     const res = await loginUser(formData);
-
-  //     console.log("hiiii",res);
-  //     if (res?.success) {
-  //       const user = res.data.email;
-  //       console.log("user",user)
-  //       console.log('Logged in user:', user);
-  //       Cookies.set('user', user, { expires: 1 });
-  //       toast.success('Sign in successful!', { autoClose: 500 });
-  //       navigate('/jobs', { replace: true });
-  //     } else {
-  //       toast.error(res.data?.message || 'Invalid credentials', { autoClose: 1000 });
-  //     }
-  //   } catch (err) {
-  //     console.error('Login Error:', err);
-  //     toast.error('Something went wrong.' , { autoClose: 1000 });
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  try {
-    const res = await loginUser(formData);
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await loginUser(formData);
 
-    console.log("Full login response:", res);
+      if (res?.success && res.data) {
+        const email = res.data.email;
+        const role = res.data.role;
 
-    if (res?.success && res.data) {
-      const email = res.data.email;
-      const role = res.data.role;
+        Cookies.set('user', email, { expires: 1 });
+        Cookies.set('role', role, { expires: 1 });
+        Cookies.set('tokens', res.data.token, { expires: 1, path:'/' });
+        
+        console.log("Token received:", res.data.token);
 
-      console.log('Email:', email);
-      console.log('Role:', role);
+        toast.success('Sign in successful!', { autoClose: 500 });
 
-      Cookies.set('user', email, { expires: 1 });
-      Cookies.set('role', role, { expires: 1 });
-
-      toast.success('Sign in successful!', { autoClose: 500 });
-
-      if (role === 'hr') {
-        navigate('/job/post', { replace: true });
-      } else if (role === 'user') {
-        navigate('/jobs', { replace: true });
+        if (role === 'hr') {
+          navigate('/job/post', { replace: true });
+        } else if (role === 'user') {
+          navigate('/jobs', { replace: true });
+        } else {
+          toast.error('Unknown role', { autoClose: 1000 });
+        }
       } else {
-        toast.error('Unknown role', { autoClose: 1000 });
+        toast.error(res?.data?.message || 'Invalid credentials', { autoClose: 1000 });
       }
-    } else {
-      toast.error(res?.data?.message || 'Invalid credentials', { autoClose: 1000 });
+    } catch (err) {
+      toast.error('Something went wrong.', { autoClose: 1000 });
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    console.error('Login Error:', err);
-    toast.error('Something went wrong.', { autoClose: 1000 });
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <div
-      className="container d-flex justify-content-center align-items-center"
-      style={{ minHeight: '100vh' }}
+      style={{
+        height: '60vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '20px',
+        boxSizing: 'border-box',
+        backgroundColor: '#f8f9fa',
+      }}
     >
-     <div className="card shadow p-4" style={{ maxWidth: '400px', width: '100%' }}>
+      <div
+        className="card shadow p-4"
+        style={{
+          width: '400px',
+          maxWidth: '100%', // responsive on very small screens
+        }}
+      >
         <h2 className="text-center mb-4 fw-bold">Sign in to Your Account</h2>
 
         <form onSubmit={handleSubmit} noValidate>

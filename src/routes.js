@@ -4,12 +4,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/home';
 import Login from './pages/login';
 import Register from './pages/register';
-import Navbar from './components/Navbar';
+import Navbar from './pages/navbar';
+import Footer from './pages/footer';
 import JobList from './pages/job_list';
 import JobApplicationForm from './pages/job_application';
 import JobRequirementForm from './pages/job_requirement';
 import Notification from './pages/notification';
 import JobRequests from './pages/job_Request';
+import AboutUs from './pages/about us';
+import Contact from './pages/contact';
+import PrivateRoute from './components/protectedroute';
 
 function AppRoutes() {
 return (
@@ -21,11 +25,15 @@ return (
                 <Route path="/register" element={<Register />} />
                 <Route path="/job/post" element={<JobRequirementForm/>} />
                 <Route path="/jobs" element={<JobList />} />
-                <Route path="/apply/:jobId" element={<JobApplicationForm />} />
+                {/* <Route path="/apply/:jobId" element={<JobApplicationForm />} /> */}
+                <Route path="/apply/:jobId" element={<PrivateRoute element={<JobApplicationForm />} />} />
                 <Route path="/notifications" element={<Notification />} />
                 <Route path="/jobrequests" element={<JobRequests />} />
+                <Route path="/aboutus" element={<AboutUs />} />
+                <Route path="/contact" element={<Contact />} />
                 <Route path="*" element={<h1>Page Not Found</h1>} />
             </Routes>
+        <Footer />
         <ToastContainer />
     </Router>
     );

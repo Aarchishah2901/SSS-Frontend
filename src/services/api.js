@@ -65,10 +65,10 @@ export const submitJobApplication = async (data) => {
 };
 
 //Selection
-export const getUserSelections = async (jobApplicantId) => {
-  const response = await axios.get(`http://localhost:5000/api/selections?job_applicant_id=${jobApplicantId}`);
-  return response.data;
-};
+// export const getUserSelections = async (jobApplicantId) => {
+//   const response = await axios.get(`http://localhost:5000/api/selections?job_applicant_id=${jobApplicantId}`);
+//   return response.data;
+// };
 
 //Job Request
 export const getAllJobRequests = async () => {

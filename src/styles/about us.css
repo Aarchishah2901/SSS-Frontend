@@ -1,0 +1,42 @@
+.about-wrapper {
+  background: #f8f9fa;
+}
+
+.about-wrapper h1 {
+  font-size: 2.5rem;
+}
+
+.about-wrapper h3 {
+  font-size: 1.5rem;
+}
+
+.about-wrapper .card-title {
+  font-size: 1.2rem;
+}
+
+.about-wrapper .card-text {
+  font-size: 0.95rem;
+}
+
+.about-wrapper img {
+  max-height: 400px;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .about-wrapper img {
+    margin-bottom: 20px;
+  }
+}
+
+.about-wrapper h1,
+.about-wrapper h3,
+.about-wrapper h4 {
+  letter-spacing: 0.5px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  transition: all 0.3s ease;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+}
