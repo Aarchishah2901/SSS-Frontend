@@ -13,7 +13,7 @@ import Notification from './pages/notification';
 import JobRequests from './pages/job_Request';
 import AboutUs from './pages/about us';
 import Contact from './pages/contact';
-import PrivateRoute from './components/protectedroute';
+// import PrivateRoute from './components/protectedroute';
 
 function AppRoutes() {
 return (
@@ -25,8 +25,8 @@ return (
                 <Route path="/register" element={<Register />} />
                 <Route path="/job/post" element={<JobRequirementForm/>} />
                 <Route path="/jobs" element={<JobList />} />
-                {/* <Route path="/apply/:jobId" element={<JobApplicationForm />} /> */}
-                <Route path="/apply/:jobId" element={<PrivateRoute element={<JobApplicationForm />} />} />
+                <Route path="/apply/:jobId" element={<JobApplicationForm />} />
+                {/* <Route path="/apply/:jobId" element={<PrivateRoute element={<JobApplicationForm />} />} /> */}
                 <Route path="/notifications" element={<Notification />} />
                 <Route path="/jobrequests" element={<JobRequests />} />
                 <Route path="/aboutus" element={<AboutUs />} />

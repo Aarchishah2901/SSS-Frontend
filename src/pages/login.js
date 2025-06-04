@@ -23,14 +23,18 @@ const Login = () => {
       const res = await loginUser(formData);
 
       if (res?.success && res.data) {
-        const email = res.data.email;
-        const role = res.data.role;
+        // const email = res.data.email;
+        // const role = res.data.role;
+        const { name, email, role } = res.data;
 
+        Cookies.set('username', name, { expires: 1 });
         Cookies.set('user', email, { expires: 1 });
         Cookies.set('role', role, { expires: 1 });
-        Cookies.set('tokens', res.data.token, { expires: 1, path:'/' });
-        
+        Cookies.set('tokens', res.data.token, { expires: 1 });
+        Cookies.get('tokens', res.data.token)
         console.log("Token received:", res.data.token);
+        console.log(res.data.token);
+        
 
         toast.success('Sign in successful!', { autoClose: 500 });
 

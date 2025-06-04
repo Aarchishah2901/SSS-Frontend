@@ -75,6 +75,9 @@ export const getAllJobRequests = async () => {
   return await axios.get(`${API_URL}/job-requests`);
 };
 
+// export const updateJobStatus = async (id, status) => {
+//   return await axios.put(`${API_URL}/${id}/status`, { status });
+// };
 export const updateJobStatus = async (id, status) => {
-  return await axios.put(`${API_URL}/${id}/status`, { status });
+  return await axios.put(`${API_URL}/job-requests/${id}/status`, { status });
 };

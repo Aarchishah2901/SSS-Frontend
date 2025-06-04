@@ -1,42 +1,3 @@
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-// import Cookies from 'js-cookie';
-
-// const Navbar = () => {
-//   const userId = Cookies.get('userId');
-  
-//   return (
-//     <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-//       <div className="container">
-//         <Link className="navbar-brand fw-bold text-warning" to="/">Staff Sync System</Link>
-//         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-//           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-//           <span className="navbar-toggler-icon"></span>
-//         </button>
-
-//         <div className="collapse navbar-collapse" id="navbarNav">
-//           <ul className="navbar-nav ms-auto">
-//             <li className="nav-item">
-//               <Link className="nav-link" to="/">Home</Link>
-//             </li>
-//             <li className="nav-item">
-//               <Link className="nav-link" to="/aboutus">About Us</Link>
-//             </li>
-//             <li className="nav-item">
-//               <Link className="nav-link" to="/contact">Contact Us</Link>
-//             </li>
-//             <li className="nav-item">
-//               <Link className="nav-link" to="/jobs">Jobs</Link>
-//             </li>
-//           </ul>
-//         </div>
-//       </div>
-//     </nav>
-//   );
-// };
-
-// export default Navbar;
-
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -50,11 +11,16 @@ const Navbar = () => {
   const userCookie = Cookies.get("user");
   const user = userCookie ? userCookie : null;
 
+  const username = Cookies.get("username");
+
   const handleLogout = () => {
-    Cookies.remove("user");
-    toast.success("Logged out successfully", { autoClose: 1000 });
-    navigate("/login");
-  };
+  Cookies.remove("user");
+  Cookies.remove("role");
+  Cookies.remove("tokens");
+  Cookies.remove("username");
+  toast.success("Siggned out successfully", { autoClose: 1000 });
+  navigate("/login");
+};
 
   const onLoginPage = location.pathname === "/login";
   const onRegisterPage = location.pathname === "/register";
@@ -88,7 +54,7 @@ const Navbar = () => {
             {user ? (
               <>
                 <li className="nav-item">
-                  <span className="nav-link text-warning fw-semibold">Welcome, {user.name}</span>
+                  <span className="nav-link text-warning fw-semibold">Welcome, {username}</span>
                 </li>
                 <li className="nav-item">
                   <button className="btn btn-outline-warning fw-bold" onClick={handleLogout}>

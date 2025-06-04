@@ -110,10 +110,11 @@ const JobList = ({ onApply }) => {
   // };
   const handleApply = (jobId) => {
   const token = Cookies.get('tokens');
-  console.log("Token from cookie:", token);
+  console.log("Token from cookiegfhfh:", token);
 
   if (token) {
     navigate(`/apply/${jobId}`);
+    console.log(token);
   } else {
     toast.warn('Please log in to apply for the job', { autoClose: 1500 });
     navigate('/login');
