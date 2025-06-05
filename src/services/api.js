@@ -71,13 +71,18 @@ export const submitJobApplication = async (data) => {
 // };
 
 //Job Request
-export const getAllJobRequests = async () => {
-  return await axios.get(`${API_URL}/job-requests`);
+// export const getAllJobRequests = async () => {
+//   return await axios.get(`${API_URL}/job-requests`);
+// };
+
+// export const updateJobStatus = async (id, status, message) => {
+//   return await axios.post(`${API_URL}/job-requests/${id}/status`, { status, message });
+// };
+
+export const getAllSelections = async () => {
+  return await axios.get(`${API_URL}/selections`);
 };
 
-// export const updateJobStatus = async (id, status) => {
-//   return await axios.put(`${API_URL}/${id}/status`, { status });
-// };
-export const updateJobStatus = async (id, status) => {
-  return await axios.put(`${API_URL}/job-requests/${id}/status`, { status });
+export const updateSelectionStatus = async (id, status, message) => {
+  return await axios.post(`${API_URL}/selections/${id}/status`, { status, message });
 };

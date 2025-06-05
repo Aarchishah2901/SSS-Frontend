@@ -12,15 +12,17 @@ const Navbar = () => {
   const user = userCookie ? userCookie : null;
 
   const username = Cookies.get("username");
+  const role = Cookies.get("role"); // Get role from cookie
+  console.log("Role from cookie:", role); // Debug log
 
   const handleLogout = () => {
-  Cookies.remove("user");
-  Cookies.remove("role");
-  Cookies.remove("tokens");
-  Cookies.remove("username");
-  toast.success("Siggned out successfully", { autoClose: 1000 });
-  navigate("/login");
-};
+    Cookies.remove("user");
+    Cookies.remove("role");
+    Cookies.remove("tokens");
+    Cookies.remove("username");
+    toast.success("Signed out successfully", { autoClose: 1000 });
+    navigate("/login");
+  };
 
   const onLoginPage = location.pathname === "/login";
   const onRegisterPage = location.pathname === "/register";
@@ -50,6 +52,18 @@ const Navbar = () => {
               <Link className="nav-link" to="/jobs">Jobs</Link>
             </li>
 
+            {/* HR-only Links */}
+            {role?.toLowerCase() === "hr" && (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/job/post">Job/Post</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/jobrequests">Job Requests</Link>
+                </li>
+              </>
+            )}
+
             {/* Authenticated User */}
             {user ? (
               <>
@@ -64,11 +78,6 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                {/* {onLoginPage && (
-                  <li className="nav-item">
-                    <Link to="/register" className="btn btn-outline-warning fw-bold">Register</Link>
-                  </li>
-                )} */}
                 {onRegisterPage && (
                   <li className="nav-item">
                     <Link to="/login" className="btn btn-outline-warning fw-bold">Sign in</Link>
@@ -79,9 +88,6 @@ const Navbar = () => {
                     <li className="nav-item">
                       <Link to="/login" className="btn btn-warning fw-bold">Sign in</Link>
                     </li>
-                    {/* <li className="nav-item">
-                      <Link to="/register" className="btn btn-outline-warning fw-bold">Register</Link>
-                    </li> */}
                   </>
                 )}
               </>
