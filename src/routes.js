@@ -13,6 +13,7 @@ import Notification from './pages/notification';
 import JobRequests from './pages/job_Request';
 import AboutUs from './pages/about us';
 import Contact from './pages/contact';
+import SelectionStatus from './pages/review_status';
 // import PrivateRoute from './components/protectedroute';
 
 function AppRoutes() {
@@ -31,6 +32,7 @@ return (
                 <Route path="/jobrequests" element={<JobRequests />} />
                 <Route path="/aboutus" element={<AboutUs />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/review/:userId" element={<SelectionStatus/>} />
                 <Route path="*" element={<h1>Page Not Found</h1>} />
             </Routes>
         <Footer />

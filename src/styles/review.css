@@ -1,0 +1,108 @@
+.selection-card {
+  background-color: #ffffff;
+  border: 1px solid #f0c36d;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 600px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.selection-header {
+  background-color: #f6b73c;
+  color: #ffffff;
+  padding: 20px 25px;
+  font-weight: bold;
+  font-size: 1.4rem;
+  border-bottom: 1px solid #f0c36d;
+}
+
+.selection-body {
+  padding: 25px;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 5px;
+}
+
+.value-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #212529;
+}
+
+.message-box {
+  background-color: #fff9e6;
+  border-left: 4px solid #f6b73c;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.selection-card {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  padding: 30px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.selection-header h3 {
+  color: #343a40;
+  font-weight: 600;
+  border-bottom: 2px solid rgb(18, 18, 19);
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+}
+
+.selection-body .form-label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.value-text,
+.message-box,
+.status-badge {
+  background-color: #ffffff;
+  border: 1px solid #ced4da;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Status-specific color styles */
+.status-badge.select {
+  background-color: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+  font-weight: 600;
+}
+
+.status-badge.reject {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-color: #f5c6cb;
+  font-weight: 600;
+}
+
+.status-badge.pending {
+  background-color: #fff3cd;
+  color: #856404;
+  border-color: #ffeeba;
+  font-weight: 600;
+}
+
+.message-box {
+  white-space: pre-wrap;
+  color: #495057;
+}

@@ -192,12 +192,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setApplications,
-  setSelections,
-  updateSelection,
-  setMessage,
-} from "../features/jobdashboard/jobdashboardslice";
+import { setApplications, setSelections, updateSelection, setMessage, } from "../features/jobdashboard/jobdashboardslice";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 

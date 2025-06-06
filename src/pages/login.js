@@ -25,10 +25,11 @@ const Login = () => {
       if (res?.success && res.data) {
         // const email = res.data.email;
         // const role = res.data.role;
-        const { name, email, role } = res.data;
+        const { id, name, email, role } = res.data;
 
+        Cookies.set('user', id, { expires: 1 });
         Cookies.set('username', name, { expires: 1 });
-        Cookies.set('user', email, { expires: 1 });
+        Cookies.set('email', email, { expires: 1 });
         Cookies.set('role', role, { expires: 1 });
         Cookies.set('tokens', res.data.token, { expires: 1 });
         Cookies.get('tokens', res.data.token)
