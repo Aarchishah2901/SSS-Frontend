@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
-//Register
+// Register
 export const registerUser = async (data) => {
   const res = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
@@ -15,7 +15,8 @@ export const registerUser = async (data) => {
   return res.json();
 };
 
-//Login
+
+// Login
 export const loginUser = async (data) => {
   const res = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
@@ -64,21 +65,20 @@ export const submitJobApplication = async (data) => {
   return res.json();
 };
 
+// Get job application data
+export const getjobapplicationdata = async (data) => {
+  const res = await fetch(`${API_URL}/job-applications`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(data),
+  });
+  return res.json();
+}
+
 //Selection
-// export const getUserSelections = async (jobApplicantId) => {
-//   const response = await axios.get(`http://localhost:5000/api/selections?job_applicant_id=${jobApplicantId}`);
-//   return response.data;
-// };
-
-//Job Request
-// export const getAllJobRequests = async () => {
-//   return await axios.get(`${API_URL}/job-requests`);
-// };
-
-// export const updateJobStatus = async (id, status, message) => {
-//   return await axios.post(`${API_URL}/job-requests/${id}/status`, { status, message });
-// };
-
 export const getAllSelections = async () => {
   return await axios.get(`${API_URL}/selections`);
 };

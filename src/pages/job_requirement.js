@@ -57,7 +57,7 @@ const JobRequirementForm = () => {
       <div className="container mt-5">
         <ToastContainer position="top-right" autoClose={3000} />
         <div className="card shadow-sm">
-          <div className="card-header bg-primary text-white">
+          <div className="card-header bg-warning text white">
             <h4 className="mb-0">Post Job Requirement</h4>
           </div>
           <div className="card-body">
