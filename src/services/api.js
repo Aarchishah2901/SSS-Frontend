@@ -83,8 +83,12 @@ export const getAllSelections = async () => {
   return await axios.get(`${API_URL}/selections`);
 };
 
+// export const updateSelectionStatus = async (id, status, message) => {
+//   return await axios.post(`${API_URL}/selections/${id}/status`, { status, message });
+// };
+
 export const updateSelectionStatus = async (id, status, message) => {
-  return await axios.post(`${API_URL}/selections/${id}/status`, { status, message });
+  return await axios.put(`${API_URL}/selections/${id}`, { status, message });
 };
 
 export const getUserSelectionStatus = async (userId) => {

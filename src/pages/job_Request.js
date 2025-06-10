@@ -1,42 +1,48 @@
-// import React, { useEffect, useState } from "react";
+// import React, { useEffect } from "react";
 // import axios from "axios";
+// import { useDispatch, useSelector } from "react-redux";
+// import {
+//   setApplications,
+//   setSelections,
+//   updateSelection,
+//   setMessage,
+// } from "../features/jobdashboard/jobdashboardslice";
 // import { ToastContainer, toast } from "react-toastify";
 // import 'react-toastify/dist/ReactToastify.css';
 
 // const API_URL = "http://localhost:5000/api";
 
 // const HRJobDashboard = () => {
-//   const [applications, setApplications] = useState([]);
-//   const [selectionData, setSelectionData] = useState({});
-//   const [messageInputs, setMessageInputs] = useState({});
+//   const dispatch = useDispatch();
+//   const { applications, selections, messages } = useSelector((state) => state.jobdashboard);
 
+//   // Fetch applications
 //   useEffect(() => {
 //     const fetchApplications = async () => {
 //       try {
 //         const res = await axios.get(`${API_URL}/job-applications`);
-//         setApplications(res.data);
+//         dispatch(setApplications(res.data));
 //       } catch (err) {
 //         console.error("Error fetching job applications:", err);
 //         toast.error("Failed to fetch job applications", { autoClose: 1000 });
 //       }
 //     };
 //     fetchApplications();
-//   }, []);
+//   }, [dispatch]);
 
+//   // Fetch selections
 //   useEffect(() => {
 //     const fetchSelections = async () => {
 //       try {
-//         const newSelectionData = {};
-
+//         const newSelections = {};
 //         for (const app of applications) {
 //           const res = await axios.get(
 //             `${API_URL}/selections?applicant_name=${encodeURIComponent(app.applicant_name)}`
 //           );
 //           const selection = res.data.length > 0 ? res.data[0] : null;
-//           newSelectionData[app.id] = selection;
+//           newSelections[app.id] = selection;
 //         }
-
-//         setSelectionData(newSelectionData);
+//         dispatch(setSelections(newSelections));
 //       } catch (err) {
 //         console.error("Error fetching selection data:", err);
 //         toast.error("Failed to fetch selection data", { autoClose: 1000 });
@@ -46,43 +52,37 @@
 //     if (applications.length > 0) {
 //       fetchSelections();
 //     }
-//   }, [applications]);
+//   }, [applications, dispatch]);
 
 //   const handleMessageChange = (appId, value) => {
-//     setMessageInputs((prev) => ({
-//       ...prev,
-//       [appId]: value,
-//     }));
+//     dispatch(setMessage({ appId, message: value }));
 //   };
 
 //   const handleStatusChange = async (appId, applicantName, newStatus) => {
-//     const currentSelection = selectionData[appId];
-//     const message = messageInputs[appId] ?? currentSelection?.message_to_user ?? "";
+//     const currentSelection = selections[appId];
+//     const message = messages[appId] ?? currentSelection?.message_to_user ?? "";
 
 //     try {
 //       let res;
-
 //       if (currentSelection) {
+//         // Update existing selection
 //         res = await axios.put(`${API_URL}/selections/${currentSelection.id}`, {
 //           selection_status: newStatus,
 //           message_to_user: message,
 //         });
-//         // toast.success("Selection status updated" , { autoClose: 1000 });
 //         toast.success(`Status updated to "${newStatus}" for ${applicantName}`, { autoClose: 1000 });
 //       } else {
+//         // Create new selection
 //         res = await axios.post(`${API_URL}/selections`, {
 //           job_applicant_id: appId,
 //           applicant_name: applicantName,
 //           selection_status: newStatus,
 //           message_to_user: message,
 //         });
-//         toast.success(`Selection status created, for ${applicantName}`, { autoClose: 1000 });
+//         toast.success(`Selection status created for ${applicantName}`, { autoClose: 1000 });
 //       }
 
-//       setSelectionData((prev) => ({
-//         ...prev,
-//         [appId]: res.data,
-//       }));
+//       dispatch(updateSelection({ appId, data: res.data }));
 //     } catch (err) {
 //       console.error("Error updating selection status:", err);
 //       toast.error("Failed to update selection status", { autoClose: 1000 });
@@ -114,9 +114,9 @@
 //             </thead>
 //             <tbody>
 //               {applications.map((app) => {
-//                 const selection = selectionData[app.id];
+//                 const selection = selections[app.id];
 //                 const statusValue = selection?.selection_status || "Pending";
-//                 const messageValue = messageInputs[app.id] ?? selection?.message_to_user ?? "";
+//                 const messageValue = messages[app.id] ?? selection?.message_to_user ?? "";
 
 //                 return (
 //                   <tr key={app.id}>
@@ -128,6 +128,7 @@
 //                     <td>{app.experience}</td>
 //                     <td>
 //                       <select
+//                         id={`status-${app.id}`}
 //                         className={`form-select ${
 //                           statusValue === "Select"
 //                             ? "bg-success text-white"
@@ -135,7 +136,7 @@
 //                             ? "bg-danger text-white"
 //                             : ""
 //                         }`}
-//                         value={statusValue}
+//                         defaultValue={statusValue}
 //                         onChange={(e) =>
 //                           handleStatusChange(app.id, app.applicant_name, e.target.value)
 //                         }
@@ -157,9 +158,10 @@
 //                     <td>
 //                       <button
 //                         className="btn btn-primary btn-sm"
-//                         onClick={() =>
-//                           handleStatusChange(app.id, app.applicant_name, statusValue)
-//                         }
+//                         onClick={() => {
+//                           const latestStatus = document.getElementById(`status-${app.id}`).value;
+//                           handleStatusChange(app.id, app.applicant_name, latestStatus);
+//                         }}
 //                       >
 //                         Update
 //                       </button>
@@ -188,13 +190,17 @@
 
 // export default HRJobDashboard;
 
-
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setApplications, setSelections, updateSelection, setMessage, } from "../features/jobdashboard/jobdashboardslice";
+import {
+  setApplications,
+  setSelections,
+  updateSelection,
+  setMessage,
+} from "../features/jobdashboard/jobdashboardslice";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const API_URL = "http://localhost:5000/api";
 
@@ -202,43 +208,56 @@ const HRJobDashboard = () => {
   const dispatch = useDispatch();
   const { applications, selections, messages } = useSelector((state) => state.jobdashboard);
 
-  // Fetch job applications
+  // Fetch applications and selections together
   useEffect(() => {
-    const fetchApplications = async () => {
+    const fetchData = async () => {
       try {
-        const res = await axios.get(`${API_URL}/job-applications`);
-        dispatch(setApplications(res.data));
+        const appRes = await axios.get(`${API_URL}/job-applications`);
+        const apps = appRes.data;
+        dispatch(setApplications(apps));
+
+        const newSelections = {};
+        apps.forEach(async (app) => {
+          try {
+            const res = await axios.get(
+              `${API_URL}/selections?applicant_name=${encodeURIComponent(app.applicant_name)}`
+            );
+            const selection = res.data.length > 0 ? res.data[0] : null;
+            newSelections[app.id] = selection;
+            
+            dispatch(setSelections({ ...newSelections }));
+            if (selection?.message_to_user) {
+              dispatch(setMessage({ appId: app.id, message: selection.message_to_user }));
+            }
+          } catch (error) {
+            console.error(`Error fetching selection for ${app.applicant_name}`, error);
+          }
+        });
       } catch (err) {
-        console.error("Error fetching job applications:", err);
-        toast.error("Failed to fetch job applications", { autoClose: 1000 });
+        console.error("Error loading applications or selections:", err);
+        toast.error("Failed to load job data", { autoClose: 1000 });
       }
     };
-    fetchApplications();
+
+    fetchData();
   }, [dispatch]);
 
-  // Fetch selections for each applicant
   useEffect(() => {
-    const fetchSelections = async () => {
-      try {
-        const newSelections = {};
-        for (const app of applications) {
-          const res = await axios.get(
-            `${API_URL}/selections?applicant_name=${encodeURIComponent(app.applicant_name)}`
-          );
-          const selection = res.data.length > 0 ? res.data[0] : null;
-          newSelections[app.id] = selection;
-        }
-        dispatch(setSelections(newSelections));
-      } catch (err) {
-        console.error("Error fetching selection data:", err);
-        toast.error("Failed to fetch selection data", { autoClose: 1000 });
-      }
-    };
-
-    if (applications.length > 0) {
-      fetchSelections();
+  const fetchSelections = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/selections`);
+      const formatted = {};
+      res.data.forEach(sel => {
+        formatted[sel.job_applicant_id] = sel;
+      });
+      dispatch(setSelections(formatted));
+    } catch (error) {
+      console.error("Error fetching selections:", error);
     }
-  }, [applications, dispatch]);
+  };
+
+  fetchSelections();
+}, [dispatch]);
 
   const handleMessageChange = (appId, value) => {
     dispatch(setMessage({ appId, message: value }));
@@ -251,24 +270,27 @@ const HRJobDashboard = () => {
     try {
       let res;
       if (currentSelection) {
+        // Update existing selection
         res = await axios.put(`${API_URL}/selections/${currentSelection.id}`, {
           selection_status: newStatus,
           message_to_user: message,
         });
-        toast.success(`Status updated to "${newStatus}" for ${applicantName}`, { autoClose: 1000 });
+        toast.success(`Updated to "${newStatus}" for ${applicantName}`, { autoClose: 1000 });
       } else {
+        // Create new selection
         res = await axios.post(`${API_URL}/selections`, {
           job_applicant_id: appId,
           applicant_name: applicantName,
           selection_status: newStatus,
           message_to_user: message,
         });
-        toast.success(`Selection status created for ${applicantName}`, { autoClose: 1000 });
+        toast.success(`Created selection for ${applicantName}`, { autoClose: 1000 });
       }
 
       dispatch(updateSelection({ appId, data: res.data }));
+      dispatch(setMessage({ appId, message }));
     } catch (err) {
-      console.error("Error updating selection status:", err);
+      console.error("Error saving selection status:", err);
       toast.error("Failed to update selection status", { autoClose: 1000 });
     }
   };
@@ -312,6 +334,7 @@ const HRJobDashboard = () => {
                     <td>{app.experience}</td>
                     <td>
                       <select
+                        id={`status-${app.id}`}
                         className={`form-select ${
                           statusValue === "Select"
                             ? "bg-success text-white"
@@ -319,7 +342,7 @@ const HRJobDashboard = () => {
                             ? "bg-danger text-white"
                             : ""
                         }`}
-                        value={statusValue}
+                        defaultValue={statusValue}
                         onChange={(e) =>
                           handleStatusChange(app.id, app.applicant_name, e.target.value)
                         }
@@ -341,9 +364,10 @@ const HRJobDashboard = () => {
                     <td>
                       <button
                         className="btn btn-primary btn-sm"
-                        onClick={() =>
-                          handleStatusChange(app.id, app.applicant_name, statusValue)
-                        }
+                        onClick={() => {
+                          const latestStatus = document.getElementById(`status-${app.id}`).value;
+                          handleStatusChange(app.id, app.applicant_name, latestStatus);
+                        }}
                       >
                         Update
                       </button>
