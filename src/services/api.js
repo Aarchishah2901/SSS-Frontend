@@ -99,3 +99,21 @@ export const getUserSelectionStatus = async (userId) => {
     throw error;
   }
 };
+
+// User Detail
+// export const createOrUpdateUserDetails = async (userId, data) => {
+//   return await axios.post(`${API_URL}/fill-details/${userId}`, data);
+// };
+
+export const createOrUpdateUserDetails = async (userId, data) => {
+  try {
+    return await axios.post(`${API_URL}/user-details/fill-details/${userId}`, data);
+  } catch (err) {
+    console.error("API CALL FAILED:", err.response?.status, err.response?.data);
+    throw err;
+  }
+};
+
+export const getUserDetails = async (userId) => {
+  return await axios.get(`${API_URL}/user-details/get-details/${userId}`);
+};
