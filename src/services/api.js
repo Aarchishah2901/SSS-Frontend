@@ -83,10 +83,6 @@ export const getAllSelections = async () => {
   return await axios.get(`${API_URL}/selections`);
 };
 
-// export const updateSelectionStatus = async (id, status, message) => {
-//   return await axios.post(`${API_URL}/selections/${id}/status`, { status, message });
-// };
-
 export const updateSelectionStatus = async (id, status, message) => {
   return await axios.put(`${API_URL}/selections/${id}`, { status, message });
 };
@@ -101,10 +97,6 @@ export const getUserSelectionStatus = async (userId) => {
 };
 
 // User Detail
-// export const createOrUpdateUserDetails = async (userId, data) => {
-//   return await axios.post(`${API_URL}/fill-details/${userId}`, data);
-// };
-
 export const createOrUpdateUserDetails = async (userId, data) => {
   try {
     return await axios.post(`${API_URL}/user-details/fill-details/${userId}`, data);
@@ -116,4 +108,16 @@ export const createOrUpdateUserDetails = async (userId, data) => {
 
 export const getUserDetails = async (userId) => {
   return await axios.get(`${API_URL}/user-details/get-details/${userId}`);
+};
+
+//User Profile Details
+export const getJobApplicationData = async () => {
+  const res = await fetch(`${API_URL}/job-applications`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  return res.json();
 };

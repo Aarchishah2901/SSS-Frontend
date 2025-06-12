@@ -5,6 +5,7 @@ import axios from "axios";
 const Notification = () => {
   const [selections, setSelections] = useState([]);
   const [loading, setLoading] = useState(true);
+  const API_URL = 'http://localhost:5000/api';
 
   const user = Cookies.get("user") ? (Cookies.get("user")) : null;
   const applicantName = user?.name || user?.applicant_name || "";
@@ -13,8 +14,8 @@ const Notification = () => {
     const fetchSelections = async () => {
       try {
         if (applicantName) {
-          console.log(`Fetching: http://localhost:5000/api/selections?applicant_name=${applicantName}`);
-          const res = await axios.get(`http://localhost:5000/api/selections?applicant_name=${applicantName}`);
+          console.log(`Fetching: ${API_URL}/selections?applicant_name=${applicantName}`);
+          const res = await axios.get(`${API_URL}/selections?applicant_name=${applicantName}`);
           console.log("Selections received:", res.data);
           setSelections(res.data);
         } else {

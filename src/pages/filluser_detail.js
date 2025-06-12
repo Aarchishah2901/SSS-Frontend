@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { createOrUpdateUserDetails, getUserDetails } from "../services/api";
 
 const FillUserDetails = () => {
-  const userId = Cookies.get("selectedUserId");
+  const userId = Cookies.get("user");
   console.log("User ID", userId);
   
 

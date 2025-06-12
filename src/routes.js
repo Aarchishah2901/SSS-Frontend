@@ -15,6 +15,7 @@ import AboutUs from './pages/about us';
 import Contact from './pages/contact';
 import SelectionStatus from './pages/review_status';
 import FillUserDetails from './pages/filluser_detail';
+import UserDetails from './pages/user_details';
 // import PrivateRoute from './components/protectedroute';
 
 function AppRoutes() {
@@ -35,6 +36,7 @@ return (
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/review/:userId" element={<SelectionStatus/>} />
                 <Route path="/fill-user-details" element={<FillUserDetails />} />
+                <Route path="/user-details/:userId" element={<UserDetails />} />
                 <Route path="*" element={<h1>Page Not Found</h1>} />
             </Routes>
         <Footer />

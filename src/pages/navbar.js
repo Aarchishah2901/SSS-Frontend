@@ -126,8 +126,8 @@ const Navbar = () => {
   // Get user ID and role from cookies
   const userId = Cookies.get("user") || null;
   const username = Cookies.get("username");
-  const role = Cookies.get("role"); // e.g., "user" or "hr"
-  console.log("Role from cookie:", role); // Debug log
+  const role = Cookies.get("role");
+  console.log("Role from cookie:", role);
 
   const handleLogout = () => {
     Cookies.remove("user");
