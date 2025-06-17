@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
-// Register
+//Register
 export const registerUser = async (data) => {
   const res = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
@@ -15,8 +15,7 @@ export const registerUser = async (data) => {
   return res.json();
 };
 
-
-// Login
+//Login
 export const loginUser = async (data) => {
   const res = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
@@ -43,7 +42,7 @@ export const postJobRequirement = async (data) => {
   return res.json();
 };
 
-// GET all Job Requirements
+//GET All Job Requirements
 export const getAllJobRequirements = async () => {
   const res = await fetch(`${API_URL}/job-requirements`, {
     method: "GET",
@@ -52,7 +51,7 @@ export const getAllJobRequirements = async () => {
   return res.json();
 };
 
-// POST Job Application (User applies for job)
+//POST Job Application (User applies for job)
 export const submitJobApplication = async (data) => {
   const res = await fetch(`${API_URL}/job-applications`, {
     method: "POST",
@@ -65,7 +64,7 @@ export const submitJobApplication = async (data) => {
   return res.json();
 };
 
-// Get job application data
+//Get Job Application Data
 export const getjobapplicationdata = async (data) => {
   const res = await fetch(`${API_URL}/job-applications`, {
     method: "GET",
@@ -96,15 +95,15 @@ export const getUserSelectionStatus = async (userId) => {
   }
 };
 
-// User Detail
+//User Detail Fill
 export const createOrUpdateUserDetails = async (userId, data) => {
-  try {
-    return await axios.post(`${API_URL}/user-details/fill-details/${userId}`, data);
-  } catch (err) {
-    console.error("API CALL FAILED:", err.response?.status, err.response?.data);
-    throw err;
-  }
+  return await axios.post(`${API_URL}/user-details/fill-details/${userId}`, data);
 };
+
+//User Detail Get
+export const getUserDeatil = async (userId) => {
+  return await axios.get(`${API_URL}/users/users/${userId}`);
+}
 
 export const getUserDetails = async (userId) => {
   return await axios.get(`${API_URL}/user-details/get-details/${userId}`);

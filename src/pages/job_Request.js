@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from "react-redux";
 import { setApplications, setSelections, updateSelection, setMessage, } from "../features/jobdashboard/jobdashboardslice";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,9 +12,9 @@ const API_URL = "http://localhost:5000/api";
 const HRJobDashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userId = Cookies.get("userId");
-  console.log("Set userId in cookie:", Cookies.get("userId"));
-  console.log("User ID from cookie:", userId);
+  // const userId = Cookies.get("userId");
+  // console.log("Set userId in cookie:", Cookies.get("userId"));
+  // console.log("User ID from cookie:", userId);
   // const user = Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
   
   const { applications, selections, messages } = useSelector(
@@ -22,6 +22,8 @@ const HRJobDashboard = () => {
   );
 
   useEffect(() => {
+    console.log("app",applications);
+    
     const fetchData = async () => {
       try {
         const appRes = await axios.get(`${API_URL}/job-applications`);
@@ -81,7 +83,6 @@ const HRJobDashboard = () => {
       } else {
         res = await axios.post(`${API_URL}/selections`, {
           job_applicant_id: appId,
-          userId: userId,
           applicant_name: applicantName,
           selection_status: newStatus,
           message_to_user: message,
@@ -115,7 +116,6 @@ const HRJobDashboard = () => {
             <thead className="table-dark">
               <tr>
                 <th>ID</th>
-                <th>UserID</th>
                 <th>Applicant Name</th>
                 <th>Email</th>
                 <th>Phone</th>
@@ -138,7 +138,6 @@ const HRJobDashboard = () => {
                 return (
                   <tr key={app.id}>
                     <td>{app.id}</td>
-                    <td>{app.userId || app.user_id || userId}</td>
                     <td>{app.applicant_name}</td>
                     <td>{app.email}</td>
                     <td>{app.phone_number}</td>

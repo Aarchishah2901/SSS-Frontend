@@ -1,83 +1,61 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import { getJobApplicationData, getUserDetails } from "../services/api";
+import { getUserDetails, getUserDeatil } from "../services/api";
 
 const UserDetails = () => {
-  const [jobData, setJobData] = useState(null);
+  const userId = Cookies.get("user");
   const [userDetails, setUserDetails] = useState(null);
+  const [basicUserInfo, setBasicUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // ✅ Use cookie to get userId (fallback for testing)
-  const userId = Cookies.get("user") || "8"; // fallback value for testing
+  const fetchUserDetails = async () => {
+    try {
+      const [detailsRes, userRes] = await Promise.all([
+        getUserDetails(userId),
+        getUserDeatil(userId)
+      ]);
+
+      setUserDetails(detailsRes.data);
+      setBasicUserInfo(userRes.data);
+    } catch (err) {
+      console.error("Error fetching data:", err);
+      setError("Failed to load user details.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (!userId) {
-        setError("User ID not found in cookie.");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        console.log("Fetching data for userId:", userId);
-
-        const [userRes, jobRes] = await Promise.all([
-          getUserDetails(userId),
-          getJobApplicationData(), // ✅ This API does NOT take userId
-        ]);
-
-        setUserDetails(userRes?.data);
-        setJobData(jobRes);
-      } catch (err) {
-        console.error("Fetch error:", err);
-        setError("Failed to fetch user data.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    fetchUserDetails();
   }, [userId]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div style={{ color: "red" }}>{error}</div>;
+  if (loading) return <div className="text-center mt-4">Loading...</div>;
+  if (error) return <div className="alert alert-danger mt-4">{error}</div>;
 
   return (
-    <div className="container mt-4" style={{ maxWidth: "600px", margin: "0 auto" }}>
-      <h2>User Profile & Job Application Details</h2>
+    <div className="container mt-4" style={{ maxWidth: "600px" }}>
+      <h2>User Details</h2>
 
-      {/* User Details */}
-      {userDetails ? (
-        <div className="card p-3 mb-4">
-          <h5>User Profile</h5>
-          <p><strong>Full Name:</strong> {userDetails.fullname}</p>
-          <p><strong>Email:</strong> {userDetails.email}</p>
-          <p><strong>Gender:</strong> {userDetails.gender}</p>
-          <p><strong>City:</strong> {userDetails.city}</p>
+      {basicUserInfo && (
+        <div className="card p-3 mb-3">
+          <p><strong>Name:</strong> {basicUserInfo.name} </p>
+          <p><strong>Email:</strong> {basicUserInfo.email} </p>
+          <p><strong>Genedr:</strong> {basicUserInfo.gender} </p>
+          <p><strong>Your Role:</strong> {basicUserInfo.role} </p>
         </div>
-      ) : (
-        <p>No user profile data found.</p>
       )}
 
-      {/* Job Application */}
-      {jobData ? (
+      {userDetails ? (
         <div className="card p-3">
-          <h5>Job Application</h5>
-          <p><strong>Name:</strong> {jobData.applicant_name}</p>
-          <p><strong>Email:</strong> {jobData.email}</p>
-          <p><strong>Status:</strong> {jobData.selection_status}</p>
-          <p><strong>Phone Number:</strong> {jobData.phone_number}</p>
-          <p><strong>Qualification:</strong> {jobData.qualification}</p>
-          <p><strong>Experience:</strong> {jobData.experience}</p>
-          <p><strong>Address:</strong> {jobData.address}</p>
-          <p><strong>Department:</strong> {jobData.department}</p>
-          <p><strong>Date Of Birth:</strong> {jobData.dob}</p>
-          <p><strong>Designation:</strong> {jobData.designation}</p>
-          <p><strong>Date Of Joining:</strong> {jobData.joindate}</p>
+          <p><strong>Address:</strong> {userDetails.address}</p>
+          <p><strong>Department:</strong> {userDetails.department}</p>
+          <p><strong>Date of Birth:</strong> {userDetails.dob}</p>
+          <p><strong>Designation:</strong> {userDetails.designation}</p>
+          <p><strong>Joining Date:</strong> {userDetails.joindate}</p>
         </div>
       ) : (
-        <p>No job application data found.</p>
+        <p>No user details found.</p>
       )}
     </div>
   );
