@@ -72,7 +72,7 @@ const Login = () => {
         className="card shadow p-4"
         style={{
           width: '400px',
-          maxWidth: '100%', // responsive on very small screens
+          maxWidth: '100%',
         }}
       >
         <h2 className="text-center mb-4 fw-bold">Sign in to Your Account</h2>

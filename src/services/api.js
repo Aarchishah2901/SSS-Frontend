@@ -82,6 +82,10 @@ export const getAllSelections = async () => {
   return await axios.get(`${API_URL}/selections`);
 };
 
+export const getSelectionById = async (userId) => {
+  return await axios.get(`${API_URL}/user/${userId}`);
+}
+
 export const updateSelectionStatus = async (id, status, message) => {
   return await axios.put(`${API_URL}/selections/${id}`, { status, message });
 };
