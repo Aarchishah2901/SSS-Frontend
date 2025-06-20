@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from "react-redux";
 import { setApplications, setSelections, updateSelection, setMessage, } from "../features/jobdashboard/jobdashboardslice";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,10 +12,10 @@ const API_URL = "http://localhost:5000/api";
 const HRJobDashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userId = Cookies.get("userId");
-  console.log("Set userId in cookie:", Cookies.get("userId"));
-  console.log("User ID from cookie:", userId);
-  const user = Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
+  // const userId = Cookies.get("userId");
+  // console.log("Set userId in cookie:", Cookies.get("userId"));
+  // console.log("User ID from cookie:", userId);
+  // const user = Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
   
   const { applications, selections, messages } = useSelector(
     (state) => state.jobdashboard

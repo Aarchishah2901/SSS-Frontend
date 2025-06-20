@@ -109,6 +109,10 @@ export const getUserDeatil = async (userId) => {
   return await axios.get(`${API_URL}/users/users/${userId}`);
 }
 
+export const updateUserDetail = async (id, updatedData) => {
+  return await axios.put(`${API_URL}/users/users/${id}`, updatedData);
+}
+
 export const getUserDetails = async (userId) => {
   return await axios.get(`${API_URL}/user-details/get-details/${userId}`);
 };
