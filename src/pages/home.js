@@ -14,7 +14,15 @@ const Home = () => {
   useEffect(() => {
     fetch(`${API_URL}/job-requirements`)
       .then((res) => res.json())
-      .then((data) => setJobs(data))
+      // .then((data) => setJobs(data))
+      .then((data) => {
+      console.log("Fetched jobs:", data);
+      if (Array.isArray(data)) {
+      setJobs(data);
+      } else {
+      setJobs([]); // fallback to empty array
+    }
+  })
       .catch((err) => console.error("Error fetching jobs:", err));
   }, []);
 
