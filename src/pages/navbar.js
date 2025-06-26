@@ -188,7 +188,7 @@ const Navbar = () => {
                 {/* 🔔 Review Icon Link - Only for 'user' role */}
                 {role?.toLowerCase() === "user" && (
                   <li className="nav-item">
-                    <Link to={`/review/${userId}`} className="nav-link position-relative">
+                    <Link to={`/review`} className="nav-link position-relative">
                       <i className="bi bi-bell-fill fs-5 text-warning"></i>
                     </Link>
                   </li>

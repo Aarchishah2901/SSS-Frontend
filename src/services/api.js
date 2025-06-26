@@ -82,12 +82,23 @@ export const getAllSelections = async () => {
   return await axios.get(`${API_URL}/selections`);
 };
 
-export const getSelectionById = async (userId) => {
-  return await axios.get(`${API_URL}/user/${userId}`);
-}
+// export const getSelectionById = async (userId) => {
+//   return await axios.get(`${API_URL}/user/${userId}`);
+// }
+export const getSelectionByEmail = async (email) => {
+  return await axios.get(`${API_URL}selections/selection/by-email`, {
+    params: { email }
+  });
+};
 
-export const updateSelectionStatus = async (id, status, message) => {
-  return await axios.put(`${API_URL}/selections/${id}`, { status, message });
+// export const updateSelectionStatus = async (id, status, message) => {
+//   return await axios.put(`${API_URL}/selections/${id}`, { status, message });
+// };
+export const updateSelectionStatus = async (email, status, message) => {
+  return await axios.put(`${API_URL}/selections/selection/by-email?email=${email}`, {
+    selection_status: status,
+    message_to_user: message,
+  });
 };
 
 export const getUserSelectionStatus = async (userId) => {

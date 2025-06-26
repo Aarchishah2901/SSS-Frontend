@@ -34,7 +34,7 @@ return (
                 <Route path="/jobrequests" element={<JobRequests />} />
                 <Route path="/aboutus" element={<AboutUs />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/review/:userId" element={<SelectionStatus/>} />
+                <Route path="/review" element={<SelectionStatus/>} />
                 <Route path="/fill-user-details" element={<FillUserDetails />} />
                 <Route path="/user-details/:userId" element={<UserDetails />} />
                 <Route path="*" element={<h1>Page Not Found</h1>} />
